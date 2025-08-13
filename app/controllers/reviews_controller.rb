@@ -1,5 +1,5 @@
 class ReviewsController < ApplicationController
-  before_action :set_restaurant, only: [ :new, :create ]
+  before_action :set_restaurant, only: %i[new create]
 
   def new
     @review = Review.new
@@ -7,6 +7,7 @@ class ReviewsController < ApplicationController
 
   def create
     @review = Review.new(review_params)
+    @reviews = @restaurant.reviews
 
     # link the review to its parent restaurant
     @review.restaurant_id = @restaurant.id
@@ -14,7 +15,7 @@ class ReviewsController < ApplicationController
     if @review.save
       redirect_to restaurant_path(@restaurant)
     else
-      render :new, status: :unprocessable_entity
+      render 'restaurants/show', status: :unprocessable_entity
     end
   end
 
@@ -27,5 +28,4 @@ class ReviewsController < ApplicationController
   def review_params
     params.require(:review).permit(:content, :rating)
   end
-  
 end

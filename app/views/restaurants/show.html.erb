@@ -6,18 +6,25 @@
 </div>
 
 <div>
-  <h3>Reviews</h3>
+  <h2>Reviews</h2>
   <ul>
-    <% @reviews.each do |review| %>
+ <% @reviews.each do |review| %>
   <li>
     <%= review.content %>
     <%= review.rating %>
-  </li>
+ </li>
     <% end  %>
   </ul>
+
+
+<h3>New review</h3>
+<%= simple_form_for [@restaurant, @review] do |f| %>
+  <%= f.input :content %>
+  <%= f.input :rating %>
+  <%= f.submit "Submit review", class: "btn btn-primary" %>
+<% end %>
 </div>
 
-
 <%= link_to "🔙 Back", restaurants_path %>
-<%= link_to "Add a new review", new_restaurant_review_path(@restaurant) %>
+
 </div>
